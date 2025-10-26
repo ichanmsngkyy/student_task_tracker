@@ -42,3 +42,51 @@ function setMinDate() {
   taskDate.setAttribute("min", today);
   taskDate.value = today;
 }
+
+// ========================================
+// ADD TASK
+// ========================================
+function handleAddTask(e) {
+  e.preventDefault();
+
+  const title = taskTitle.value.trim();
+  const dueDate = taskDate.value;
+  const priority = taskPriority.value;
+
+  if (!title || title.length < 3) {
+    alert("❌ Task title must be at least 3 characters");
+    return;
+  }
+
+  if (!dueDate) {
+    alert("❌ Please select a due date");
+    return;
+  }
+
+  const selectedDate = new Date(dueDate);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (selectedDate < today) {
+    alert("❌ Due date cannot be in the past");
+    return;
+  }
+
+  const task = {
+    id: Date.now(),
+    title: title,
+    dueDate: dueDate,
+    priority: priority,
+    completed: false,
+    createdAt: new Date().toISOString(),
+  };
+
+  tasks.push(task);
+  saveTasksToStorage();
+  renderTasks();
+  updateStats();
+  taskForm.reset();
+  setMinDate();
+
+  console.log("✅ Task added:", task.title);
+}
