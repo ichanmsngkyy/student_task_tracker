@@ -90,3 +90,24 @@ function handleAddTask(e) {
 
   console.log("✅ Task added:", task.title);
 }
+
+// ========================================
+// LOCALSTORAGE
+// ========================================
+function saveTasksToStorage() {
+  try {
+    localStorage.setItem("studentTasks", JSON.stringify(tasks));
+  } catch (error) {
+    console.error("Error saving tasks:", error);
+  }
+}
+
+function loadTasksFromStorage() {
+  try {
+    const stored = localStorage.getItem("studentTasks");
+    tasks = stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error("Error loading tasks:", error);
+    tasks = [];
+  }
+}
