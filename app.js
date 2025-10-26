@@ -232,3 +232,18 @@ function toggleComplete(id) {
     updateStats();
   }
 }
+
+// ========================================
+// DELETE TASK
+// ========================================
+function deleteTask(id) {
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+
+  if (confirm(`Delete "${task.title}"?`)) {
+    tasks = tasks.filter((t) => t.id !== id);
+    saveTasksToStorage();
+    renderTasks();
+    updateStats();
+  }
+}
