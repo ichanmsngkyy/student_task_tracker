@@ -72,23 +72,44 @@ function handleAddTask(e) {
     return;
   }
 
-  const task = {
-    id: Date.now(),
-    title: title,
-    dueDate: dueDate,
-    priority: priority,
-    completed: false,
-    createdAt: new Date().toISOString(),
-  };
+  if (editingTaskId !== null) {
+    // UPDATE existing task
+    const task = tasks.find((t) => t.id === editingTaskId);
+    if (task) {
+      task.title = title;
+      task.dueDate = dueDate;
+      task.priority = priority;
+      console.log("✏️ Task updated:", task.title);
+    }
+    editingTaskId = null;
+  } else {
+    // ADD new task
+    const task = {
+      id: Date.now(),
+      title: title,
+      dueDate: dueDate,
+      priority: priority,
+      completed: false,
+      createdAt: new Date().toISOString(),
+    };
+    tasks.push(task);
+    console.log("✅ Task added:", task.title);
+  }
 
-  tasks.push(task);
+  // Reset form and button
+  const submitBtn = taskForm.querySelector('button[type="submit"]');
+  submitBtn.innerHTML = "<span>➕</span> Add Task";
+  submitBtn.classList.remove("editing");
+
+  // Reset heading
+  const heading = document.querySelector(".task-input-section h2");
+  heading.textContent = "Add New Task";
+
   saveTasksToStorage();
   renderTasks();
   updateStats();
   taskForm.reset();
   setMinDate();
-
-  console.log("✅ Task added:", task.title);
 }
 
 // ========================================
