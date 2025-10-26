@@ -49,6 +49,36 @@
           </form>
         </section>
 
+        <section class="controls-section">
+          <div class="stats">
+            <div class="stat-card">
+              <span class="stat-label">Total</span>
+              <span class="stat-value" id="totalTasks">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Active</span>
+              <span class="stat-value" id="activeTasks">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Completed</span>
+              <span class="stat-value" id="completedTasks">0</span>
+            </div>
+          </div>
+
+          <div class="controls">
+            <div class="filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="active">Active</button>
+              <button class="filter-btn" data-filter="completed">
+                Completed
+              </button>
+            </div>
+            <button id="sortBtn" class="btn-secondary">
+              <span>🔄</span> Sort by Date
+            </button>
+          </div>
+        </section>
+
         <section class="task-list-section">
           <h2>Your Tasks</h2>
           <div id="taskList"></div>
