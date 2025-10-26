@@ -267,3 +267,25 @@ function editTask(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
   taskTitle.focus();
 }
+
+// ========================================
+// FILTER & SORT
+// ========================================
+function handleFilter(e) {
+  currentFilter = e.target.dataset.filter;
+  filterBtns.forEach((btn) => btn.classList.remove("active"));
+  e.target.classList.add("active");
+  renderTasks();
+}
+
+function handleSort() {
+  tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+  saveTasksToStorage();
+  renderTasks();
+}
+
+function updateStats() {
+  totalTasksEl.textContent = tasks.length;
+  activeTasksEl.textContent = tasks.filter((t) => !t.completed).length;
+  completedTasksEl.textContent = tasks.filter((t) => t.completed).length;
+}
