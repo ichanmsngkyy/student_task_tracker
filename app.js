@@ -3,6 +3,7 @@
 // ========================================
 let tasks = [];
 let currentFilter = "all";
+let editingTaskId = null;
 
 // ========================================
 // DOM ELEMENTS
@@ -255,15 +256,24 @@ function editTask(id) {
   const task = tasks.find((t) => t.id === id);
   if (!task) return;
 
+  // Populate form
   taskTitle.value = task.title;
   taskDate.value = task.dueDate;
   taskPriority.value = task.priority;
 
-  tasks = tasks.filter((t) => t.id !== id);
-  saveTasksToStorage();
-  renderTasks();
-  updateStats();
+  // Set editing mode
+  editingTaskId = id;
 
+  // Update button text
+  const submitBtn = taskForm.querySelector('button[type="submit"]');
+  submitBtn.innerHTML = "<span>✏️</span> Update Task";
+  submitBtn.classList.add("editing");
+
+  // Update heading ⭐ ADD THESE LINES
+  const heading = document.querySelector(".task-input-section h2");
+  heading.textContent = "Edit Task";
+
+  // Scroll to form
   window.scrollTo({ top: 0, behavior: "smooth" });
   taskTitle.focus();
 }
