@@ -247,3 +247,23 @@ function deleteTask(id) {
     updateStats();
   }
 }
+
+// ========================================
+// EDIT TASK
+// ========================================
+function editTask(id) {
+  const task = tasks.find((t) => t.id === id);
+  if (!task) return;
+
+  taskTitle.value = task.title;
+  taskDate.value = task.dueDate;
+  taskPriority.value = task.priority;
+
+  tasks = tasks.filter((t) => t.id !== id);
+  saveTasksToStorage();
+  renderTasks();
+  updateStats();
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  taskTitle.focus();
+}
